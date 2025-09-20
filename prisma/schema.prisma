@@ -30,7 +30,7 @@ model Usuario {
   
   postagem Postagem?
 
-  @@map("Usuarios")
+  @@map("usuario")
 }
 
 model Produtor {
@@ -44,7 +44,7 @@ model Produtor {
   user_id Int @unique
   usuario Usuario @relation(fields: [user_id], references: [id])
 
-  @@map("Produtores")
+  @@map("produtor")
 }
 
 model Postagem {
@@ -55,4 +55,6 @@ model Postagem {
 
   autor_id Int @unique
   usuario Usuario @relation(fields: [autor_id], references: [id])
+
+  @@map("post")
 }

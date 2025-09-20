@@ -1,7 +1,7 @@
 ## Descrição
 Backend feito para a disciplina de Extensão na graduação de Sistemas de Informação.
 
-Documentação completa planejada por outros membros:\
+Documentação completa do planejamento do projeto:\
 https://night-sound-707.notion.site/Do-Sert-o-ao-Digital-Promovendo-a-Cultura-do-Mel-de-Moreil-ndia-24f3edbd06c3805d99cbe19678128a16
 
 ## Ferramentas
@@ -11,7 +11,6 @@ TypeScript (v5.9.2)
 Express (v5.1.0)
 
 Prisma (v6.16.1)
-
 
 ## Setup
 
@@ -42,3 +41,14 @@ Prisma
     npm install prisma
     npm install @prisma/client
     npx prisma init
+
+Bcryptjs (Criptografia)
+
+    npm install bcryptjs
+    npm isntall @types/bcryptjs
+
+
+JWT
+    
+    npm install jsonwebtoken
+    npm install @types/jsonwebtoken -D

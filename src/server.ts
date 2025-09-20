@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import { router } from './routes';
 
@@ -17,7 +17,7 @@ app.use(router);
 
 
 // Todas as rotas passarão por aqui fazendo tratativa de erro
-app.use((err: Error, req: Request, res: Response)=>{
+app.use((err: Error, req: Request, res: Response, next: NextFunction)=>{
     if(err instanceof Error){
         return res.status(400).json({
             error: err.message
