@@ -11,3 +11,7 @@ TypeScript (v5.9.2)
 Express (v5.1.0)
 
 Prisma (v6.16.1)
+
+## Inicialização
+
+    npm i

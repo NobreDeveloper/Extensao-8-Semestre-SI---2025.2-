@@ -24,7 +24,7 @@ class AuthUserService{
 
         // Verifica a senha criptografada
         const passwordComparator = await compare(senha, user.senha); // retorno boleano
-        
+
         if(!passwordComparator){ 
             throw new Error("Falha no login")
         }
@@ -36,7 +36,8 @@ class AuthUserService{
             // PAYLOAD
             {
                 nome: user.nome,
-                email: user.email
+                email: user.email,
+                papel: user.papel
             },
 
             // SECRET KEY
