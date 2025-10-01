@@ -6,7 +6,7 @@ interface PayLoad {
     papel: 'ADMIN' | 'PRODUTOR';
 }
 
-export function isAdmin(papelRequerido: 'ADMIN' | 'PRODUTOR') {
+export function can(papelRequerido: 'ADMIN' | 'PRODUTOR') {
     return (req: Request, res: Response, next: NextFunction) => {
         const authToken = req.headers.authorization;
 

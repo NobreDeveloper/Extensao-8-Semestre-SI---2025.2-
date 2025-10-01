@@ -3,29 +3,44 @@ import { CreateUserController } from "./controller/usuario/CreateUserController"
 import { AuthUserController } from "./controller/usuario/AuthUserController";
 import { ListUserController } from "./controller/usuario/ListUserController";
 import { isAuthenticated } from "./middlewares/isAuthenticated";
-import { isAdmin } from "./middlewares/isAdmin";
+import { can } from "./middlewares/can";
+import { ListPostController } from "./controller/postagem/ListPostController";
+import { CreatePostController } from "./controller/postagem/CreatePostController";
+import { UpdatePostController } from "./controller/postagem/UpdatePostController";
+import { DeletePostController } from "./controller/postagem/DeletePostController";
 
 const router = Router();
 
-// Rotas para Usuario
-router.post('/api/usuario', new CreateUserController().handle);
-router.post('/api/auth/login', new AuthUserController().handle);
+// Rota de Login
+    router.post('/api/auth/login', new AuthUserController().handle);
 
-// Rotas protegidas *(apenas para o usuario autenticado)
-router.get('/api/usuario/autenticado', isAuthenticated, new ListUserController().handle);
-
-// Rota para ADMIN (Somente usuarios com papel 'ADMIN' podem acessar)
-router.get('/api/admin/usuario', isAuthenticated, isAdmin('ADMIN'), new ListUserController().handle);
 
 // Rotas para Usuario
-router.post('/api/usuario', new CreateUserController().handle)
+    router.get('/api/usuario', new ListUserController().handle);
 
-router.post('/api/auth/login', new AuthUserController().handle)
+    router.post('/api/usuario', new CreateUserController().handle);
+
+
+    // Rotas protegidas *(apenas para o usuario autenticado)
+    router.get('/api/usuario/autenticado', isAuthenticated, new ListUserController().handle);
+
+    // Rota para ADMIN (Somente usuarios com papel 'ADMIN' podem acessar)
+    router.get('/api/admin/usuario', isAuthenticated, can('ADMIN'), new ListUserController().handle);
 
 
 // Rotas para Produtor
 
 
 // Rotas para Postagem
+
+    router.get('/api/admin/postagem', isAuthenticated, can('ADMIN'), new ListPostController().handle);
+
+    router.post('/api/admin/postagem', isAuthenticated, can('ADMIN'), new CreatePostController().handle);
+
+    router.put('/api/admin/postagem/:id', isAuthenticated, can('ADMIN'), new UpdatePostController().handle);
+
+    router.delete('/api/admin/postagem/:id', isAuthenticated, can('ADMIN'), new DeletePostController().handle);
+
+
 
 export {router};

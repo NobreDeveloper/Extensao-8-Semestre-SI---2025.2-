@@ -5,8 +5,6 @@ import { router } from './routes';
 
 const app = express();
 
-const port = 3333;
-
 // Dizer ao express que a troca de dados será feita em JSON
 app.use(express.json());
 
@@ -32,5 +30,5 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction)=>{
 });
 
 
-app.listen(port, ()=> console.log(`Servidor Ligado na porta ${port}`))
+app.listen(3333, ()=> console.log(`Servidor Ligado`))
 

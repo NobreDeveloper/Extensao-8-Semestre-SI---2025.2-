@@ -3,13 +3,14 @@ import prismaClient from "../../prisma";
 
 
 interface UserRequest{
-    email: string;
-    senha: string;
-    nome: string;
+    email: string
+    senha: string
+    nome: string
+    papel?: string
 }
 
 class CreateUserService{
-    async execute({email, senha, nome}:UserRequest){
+    async execute({email, senha, nome, papel}:UserRequest){
 
         // Verificação se o campo email foi preenchido
         if(!email){
@@ -29,6 +30,10 @@ class CreateUserService{
         }
 
 
+        // ADMIN ou PRODUTOR
+        const userRole = papel == "ADMIN" ? "ADMIN" : "PRODUTOR";
+
+
         // Criptografia de senha
         const hashPassword = await hash(senha, 8)
 
@@ -38,7 +43,8 @@ class CreateUserService{
             data:{
                 email: email,
                 senha: hashPassword,
-                nome: nome
+                nome: nome, 
+                papel: userRole
             },
 
             // Remover o campo senha no retorno ao usuário
