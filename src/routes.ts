@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { CreateUserController } from "./controller/usuario/CreateUserController";
-import { AuthUserController } from "./controller/usuario/AuthUserController";
+import { AuthUserController } from "./controller/login/AuthUserController";
 import { ListUserController } from "./controller/usuario/ListUserController";
 import { isAuthenticated } from "./middlewares/isAuthenticated";
 import { can } from "./middlewares/can";
@@ -8,6 +8,8 @@ import { ListPostController } from "./controller/postagem/ListPostController";
 import { CreatePostController } from "./controller/postagem/CreatePostController";
 import { UpdatePostController } from "./controller/postagem/UpdatePostController";
 import { DeletePostController } from "./controller/postagem/DeletePostController";
+import { DeleteUserController } from "./controller/usuario/DeleteUserController";
+import { UpdateUserController } from "./controller/usuario/UpdateUserController";
 
 const router = Router();
 
@@ -20,12 +22,16 @@ const router = Router();
 
     router.post('/api/usuario', new CreateUserController().handle);
 
+    router.put('/api/usuario/:id', new UpdateUserController().handle);
 
-    // Rotas protegidas *(apenas para o usuario autenticado)
-    router.get('/api/usuario/autenticado', isAuthenticated, new ListUserController().handle);
+    router.delete('/api/usuario/:id', new DeleteUserController().handle);
 
-    // Rota para ADMIN (Somente usuarios com papel 'ADMIN' podem acessar)
-    router.get('/api/admin/usuario', isAuthenticated, can('ADMIN'), new ListUserController().handle);
+
+    // // Rotas protegidas *(apenas para o usuario autenticado)
+    // router.get('/api/usuario/autenticado', isAuthenticated, new ListUserController().handle);
+
+    // // Rota para ADMIN (Somente usuarios com papel 'ADMIN' podem acessar)
+    // router.get('/api/admin/usuario', isAuthenticated, can('ADMIN'), new ListUserController().handle);
 
 
 // Rotas para Produtor
