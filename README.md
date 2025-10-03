@@ -12,6 +12,116 @@ Express (v5.1.0)
 
 Prisma (v6.16.1)
 
-## Inicialização
+## Uso da API
 
-    npm i
+**Rotas privadas neecssitam que passe a autorização, seja coletado o token no retorno json e informado no header da requisição**
+
+    Key: Autentication  
+    Value: Bearer <Token>
+
+### Rota de Login ( Autenticação )
+
+**( POST )** -> "/api/auth/login"
+
+**Exemplo de Body**
+
+    {
+        "email": "exemplo@exemplo.com",
+        "senha": "exemplo"
+    }    
+
+### Rota de Usuario
+
+**( GET )** -> "/api/usuario" 
+
+---
+
+**( POST )** -> "/api/usuario"
+* Caso não seja informado o papel do usuário será definido como PRODUTOR automaticamente.
+
+**Exemplo de Body**
+
+    {
+        "email": "exemploEmail@exemplo.com",
+        "senha": "exemploSenha",
+        "nome": "exemploNome",
+        "papel": "ADMIN"
+    } 
+
+---
+
+**( UPDATE )** -> "/api/usuario/:id"
+
+* Informa qual usuario será alterado pelo id na url e qual o campo com seu respectivo valor no body.
+
+* OBS: Apenas usuário definidos como ADMIN podem alterar o papel.
+
+**Exemplo de Body**
+
+    {
+        "email": "exemploEmail@exemplo.com",
+        "senha": "exemploSenha",
+        "nome": "exemploNome",
+        "papel": "ADMIN"
+    }
+
+---
+
+**( DELETE )** -> "/api/usuario/:id"
+
+* Apenas informar qual usuário será excluido do banco pela url
+
+### Rota de Produtor
+
+
+### Rota de Produto
+
+
+## Rota de Postagem
+
+ROTA PRIVADA
+
+**( GET )** -> "/api/produtor/postagem" 
+
+---
+
+ROTA PRIVADA
+
+**( POST )** -> "/api/produtor/postagem"
+* Caso não seja informado o papel do usuário será definido como PRODUTOR automaticamente.
+
+**Exemplo de Body**
+
+    {
+        "email": "exemploEmail@exemplo.com",
+        "senha": "exemploSenha",
+        "nome": "exemploNome",
+        "papel": "ADMIN"
+    } 
+
+---
+
+ROTA PRIVADA
+
+**( UPDATE )** -> "/api/produtor/postagem/:id"
+
+* Informa qual usuario será alterado pelo id na url e qual o campo com seu respectivo valor no body.
+
+* OBS: Apenas usuário definidos como ADMIN podem alterar o papel.
+
+**Exemplo de Body**
+
+    {
+        "email": "exemploEmail@exemplo.com",
+        "senha": "exemploSenha",
+        "nome": "exemploNome",
+        "papel": "ADMIN"
+    }
+
+---
+
+ROTA PRIVADA 
+
+**( DELETE )** -> "/api/produtor/postagem/:id"
+
+* Apenas informar qual o id da postagem será excluido do banco pela url
