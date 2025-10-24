@@ -19,6 +19,11 @@ class UpdateProdutoController{
                 return res.status(400).json({ error: "ID deve ser um número válido" });
             }
 
+            // Validação do produtorId se fornecido
+            if(produtorId && isNaN(Number(produtorId))){
+                return res.status(400).json({ error: "ID do produtor inválido" });
+            }
+
             // Obter o ID do usuário autenticado
             const userId = req.user_id;
             if(!userId){
@@ -27,14 +32,19 @@ class UpdateProdutoController{
 
             const updateProdutoService = new UpdateProdutoService();
 
-            const produto = await updateProdutoService.execute({
+            // Preparar dados para envio
+            const updateData: any = {
                 id: produtoId,
-                nome,
-                descricao,
-                foto_produto,
-                produtorId,
-                userId: parseInt(userId) // Passar o ID do usuário para validação de propriedade
-            });
+                userId: parseInt(userId)
+            };
+
+            // Adicionar apenas os campos fornecidos
+            if (nome !== undefined) updateData.nome = nome;
+            if (descricao !== undefined) updateData.descricao = descricao;
+            if (foto_produto !== undefined) updateData.foto_produto = foto_produto;
+            if (produtorId !== undefined) updateData.produtorId = Number(produtorId);
+
+            const produto = await updateProdutoService.execute(updateData);
 
             return res.json(produto);
         } catch (error: any) {

@@ -13,18 +13,13 @@ class CreateProdutorService{
     async execute({nome, biografia, foto_perfil, contato_whatsapp, contato_email, userId}: ProdutorRequest){
 
         // Verificação se o campo nome foi preenchido
-        if(!nome){
-            throw new Error("Nome é obrigatório")
+        if (!nome || !foto_perfil || !contato_whatsapp) {
+            throw new Error("Campos obrigatórios não preenchidos.");
         }
 
-        // Verificação se o campo foto_perfil foi preenchido
-        if(!foto_perfil){
-            throw new Error("Foto de perfil é obrigatória")
-        }
-
-        // Verificação se o campo contato_whatsapp foi preenchido
-        if(!contato_whatsapp){
-            throw new Error("Contato WhatsApp é obrigatório")
+        // Verificação se o userId é válido
+        if(!userId || isNaN(userId)){
+            throw new Error("ID do usuário inválido")
         }
 
         // Verificação se o userId existe
