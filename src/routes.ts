@@ -61,7 +61,7 @@ const router = Router();
 
 // Rotas para Postagem
 
-    router.get('/api/admin/postagem', isAuthenticated, can('ADMIN'), new ListPostController().handle);
+    router.get('/api/postagem', isAuthenticated, new ListPostController().handle);
 
     router.post('/api/admin/postagem', isAuthenticated, can('ADMIN'), new CreatePostController().handle);
 
