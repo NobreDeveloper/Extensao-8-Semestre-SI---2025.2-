@@ -2,7 +2,6 @@ import prismaClient from "../../prisma";
 
 interface UpdateProdutorRequest{
     producerId: number
-    nome?: string
     biografia?: string
     foto_perfil?: string
     contato_whatsapp?: string
@@ -10,7 +9,7 @@ interface UpdateProdutorRequest{
 }
 
 class UpdateProdutorService{
-    async execute({producerId, nome, biografia, foto_perfil, contato_whatsapp, contato_email}: UpdateProdutorRequest){
+    async execute({producerId, biografia, foto_perfil, contato_whatsapp, contato_email}: UpdateProdutorRequest){
 
         const producerExist = await prismaClient.produtor.findUnique({
             where:{
@@ -22,11 +21,8 @@ class UpdateProdutorService{
             throw new Error("Produtor não encontrado")
         }
 
-        const data:{nome?: string, biografia?: string, foto_perfil?: string, contato_whatsapp?: string, contato_email?: string} = {}
+        const data:{ biografia?: string, foto_perfil?: string, contato_whatsapp?: string, contato_email?: string} = {}
         
-        if(nome != undefined){ 
-            data.nome = nome
-        }
 
         if(biografia != undefined){ 
             data.biografia = biografia
