@@ -83,11 +83,14 @@ Prisma (v6.16.1)
 **Exemplo de Body**
 
     {
-        "nome": "exemploNome",
-        "foto_perfil": "exemplofoto"
-        "contato_whatsapp": "exemplonumero",
-        "userId": "exemploid"
+        "biografia": "exemploBiografia",
+        "foto_perfil": "exemploFoto",
+        "contato_email": "exemploEmail",
+        "contato_whatsapp": "exemploWhatsapp",
+        "userId": 1,
     } 
+
+*   OBS: Biografia é opcional
 
 ---
 
@@ -100,10 +103,10 @@ Prisma (v6.16.1)
 **Exemplo de Body**
 
     {
-        "nome": "exemploNome",
-        "foto_perfil": "exemplofoto"
-        "contato_whatsapp": "exemplonumero",
-        "userId": "exemploid"
+        "biografia": "exemploBiografia",
+        "foto_perfil": "exemploFoto",
+        "contato_email": "exemploEmail",
+        "contato_whatsapp": "exemploWhatsapp",
     }
 
 ---
@@ -111,8 +114,6 @@ Prisma (v6.16.1)
 **( DELETE )** -> "/api/produtor/:id"
 
 * Deleta o produtor pelo id na url
-
-Obs: somento o proprio ou ADIM
 
 ### Rota de Produto
 
