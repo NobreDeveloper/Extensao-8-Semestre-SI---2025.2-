@@ -4,20 +4,15 @@ import { DeleteProdutorService } from "../../services/produtor/DeleteProdutorSer
 class DeleteProdutorController{
     async handle(req: Request, res: Response){
 
-        const { id } = req.params;
-
-        // Validação se o ID foi fornecido
-        if(!id){
-            return res.status(400).json({ error: "ID é obrigatório" });
-        }
+        const producerId = Number(req.params.id);
 
         const deleteProdutorService = new DeleteProdutorService();
 
-        const result = await deleteProdutorService.execute({
-            id: parseInt(id)
+        const produtor = await deleteProdutorService.execute({
+            producerId
         });
 
-        return res.json(result)
+        return res.json(produtor)
     }
 }
 

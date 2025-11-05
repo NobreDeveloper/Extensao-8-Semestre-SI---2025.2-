@@ -1,16 +1,16 @@
 import prismaClient from "../../prisma";
 
 interface DeleteProdutorRequest{
-    id: number
+    producerId: number
 }
 
 class DeleteProdutorService{
-    async execute({id}: DeleteProdutorRequest){
+    async execute({producerId}: DeleteProdutorRequest){
 
         // Verificação se o produtor existe
         const produtorExists = await prismaClient.produtor.findFirst({
             where:{
-                id: id
+                id: producerId
             }
         })
 
@@ -19,13 +19,13 @@ class DeleteProdutorService{
         }
 
         // Deletar o produtor (os produtos serão deletados automaticamente)
-        await prismaClient.produtor.delete({
+        const producer = await prismaClient.produtor.delete({
             where:{
-                id: id
+                id: producerId
             }
         });
         
-        return { message: "Produtor deletado com sucesso" };
+        return producer;
     }
 }
 

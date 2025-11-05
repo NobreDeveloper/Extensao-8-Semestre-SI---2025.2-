@@ -1,74 +1,58 @@
 import prismaClient from "../../prisma";
 
 interface UpdateProdutorRequest{
-    id: number
+    producerId: number
     nome?: string
     biografia?: string
     foto_perfil?: string
     contato_whatsapp?: string
     contato_email?: string
-    userId: number // ID do usuário autenticado
 }
 
 class UpdateProdutorService{
-    async execute({id, nome, biografia, foto_perfil, contato_whatsapp, contato_email, userId}: UpdateProdutorRequest){
+    async execute({producerId, nome, biografia, foto_perfil, contato_whatsapp, contato_email}: UpdateProdutorRequest){
 
-        // Verificação se o produtor existe
-        const produtorExists = await prismaClient.produtor.findFirst({
+        const producerExist = await prismaClient.produtor.findUnique({
             where:{
-                id: id
-            },
-            include: {
-                usuario: {
-                    select: {
-                        id: true,
-                        papel: true
-                    }
-                }
+                id: producerId
             }
         })
 
-        if(!produtorExists){
+        if(!producerExist){
             throw new Error("Produtor não encontrado")
         }
 
-        // Verificação de propriedade: só o dono ou ADMIN pode atualizar
-        const isOwner = produtorExists.userId === userId;
-        const isAdmin = produtorExists.usuario.papel === 'ADMIN';
-
-        if(!isOwner && !isAdmin){
-            throw new Error("Você não tem permissão para atualizar este produtor")
+        const data:{nome?: string, biografia?: string, foto_perfil?: string, contato_whatsapp?: string, contato_email?: string} = {}
+        
+        if(nome != undefined){ 
+            data.nome = nome
         }
 
-        // Preparar dados para atualização (apenas campos fornecidos)
-        const updateData: any = {};
-        
-        if(nome !== undefined) updateData.nome = nome;
-        if(biografia !== undefined) updateData.biografia = biografia;
-        if(foto_perfil !== undefined) updateData.foto_perfil = foto_perfil;
-        if(contato_whatsapp !== undefined) updateData.contato_whatsapp = contato_whatsapp;
-        if(contato_email !== undefined) updateData.contato_email = contato_email;
+        if(biografia != undefined){ 
+            data.biografia = biografia
+        }
 
-        // Atualizar o produtor
-        const produtor = await prismaClient.produtor.update({
+        if(foto_perfil != undefined){ 
+            data.foto_perfil = foto_perfil
+        }
+
+        if(contato_whatsapp != undefined){ 
+            data.contato_whatsapp = contato_whatsapp
+        }
+
+        if(contato_email != undefined){ 
+            data.contato_email = contato_email
+        }
+
+        const producer = await prismaClient.produtor.update({
             where:{
-                id: id
+                id: producerId
             },
-            data: updateData,
-            include:{
-                usuario: {
-                    select:{
-                        id: true,
-                        nome: true,
-                        email: true,
-                        papel: true
-                    }
-                },
-                produtos: true
-            }
-        });
-        
-        return produtor;
+
+            data
+        })
+
+        return producer;
     }
 }
 

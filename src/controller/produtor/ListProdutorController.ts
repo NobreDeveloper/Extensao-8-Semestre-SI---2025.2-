@@ -6,9 +6,9 @@ class ListProdutorController{
 
         const listProdutorService = new ListProdutorService();
 
-        const produtores = await listProdutorService.execute();
+        const produtor = await listProdutorService.execute();
 
-        return res.json(produtores)
+        return res.json(produtor)
     }
 }
 

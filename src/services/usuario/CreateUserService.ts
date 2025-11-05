@@ -17,6 +17,10 @@ class CreateUserService{
             throw new Error("Email incorreto")
         }
 
+        if(!papel){
+            throw new Error("A atribuição de função é necessária")
+        }
+
 
         // Verificação se o email já existe
         const userAlreadyExist = await prismaClient.usuario.findFirst({

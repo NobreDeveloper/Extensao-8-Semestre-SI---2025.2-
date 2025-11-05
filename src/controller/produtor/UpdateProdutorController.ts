@@ -3,44 +3,23 @@ import { UpdateProdutorService } from "../../services/produtor/UpdateProdutorSer
 
 class UpdateProdutorController{
     async handle(req: Request, res: Response){
-        try {
-            // Desconstrução do body da requisição
-            const { nome, biografia, foto_perfil, contato_whatsapp, contato_email } = req.body;
-            const { id } = req.params;
+        
+        const {nome, biografia, foto_perfil, contato_email, contato_whatsapp} = req.body;
 
-            // Validação se o ID foi fornecido
-            if(!id){
-                return res.status(400).json({ error: "ID é obrigatório" });
-            }
+        const producerId = Number(req.params.id);
 
-            // Validação se o ID é um número válido
-            const produtorId = parseInt(id);
-            if(isNaN(produtorId)){
-                return res.status(400).json({ error: "ID deve ser um número válido" });
-            }
+        const updateProdutorService = new UpdateProdutorService();
 
-            // Obter o ID do usuário autenticado
-            const userId = req.user_id;
-            if(!userId){
-                return res.status(401).json({ error: "Usuário não autenticado" });
-            }
-
-            const updateProdutorService = new UpdateProdutorService();
-
-            const produtor = await updateProdutorService.execute({
-                id: produtorId,
-                nome,
-                biografia,
-                foto_perfil,
-                contato_whatsapp,
-                contato_email,
-                userId: parseInt(userId) // Passar o ID do usuário para validação de propriedade
-            });
-
-            return res.json(produtor);
-        } catch (error: any) {
-            return res.status(400).json({ error: error.message });
-        }
+        const produtor = await updateProdutorService.execute({
+            nome,
+            biografia,
+            foto_perfil,
+            contato_email,
+            contato_whatsapp,
+            producerId
+        })
+    
+        return res.json(produtor)
     }
 }
 
