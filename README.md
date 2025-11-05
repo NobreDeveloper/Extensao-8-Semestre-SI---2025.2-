@@ -139,14 +139,12 @@ Prisma (v6.16.1)
 
 * Indica qual produto será modificado por meio do ID presente na URL e informar os campos que deseja ser alterado no body.
 
-* OBS: só o dono ou ADMIN pode atualizar.
-
 **Exemplo de Body**
 
      {
         "nome": "exemploNome",
         "descricao": "exemplodescriçao"
-        " foto_produto": "exemplofoto",
+        "foto_produto": "exemplofoto",
         "produtorId": "exemploid"
     }
 
