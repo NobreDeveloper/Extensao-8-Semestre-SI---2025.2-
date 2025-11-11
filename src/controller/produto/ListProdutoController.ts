@@ -6,9 +6,9 @@ class ListProdutoController{
 
         const listProdutoService = new ListProdutoService();
 
-        const produtos = await listProdutoService.execute();
+        const produto = await listProdutoService.execute();
 
-        return res.json(produtos)
+        return res.json(produto)
     }
 }
 

@@ -4,20 +4,18 @@ import { DeleteProdutoService } from "../../services/produto/DeleteProdutoServic
 class DeleteProdutoController{
     async handle(req: Request, res: Response){
 
-        const { id } = req.params;
+        const produtoId = Number(req.params.produtoId);
 
-        // Validação se o ID foi fornecido
-        if(!id){
-            return res.status(400).json({ error: "ID é obrigatório" });
-        }
+        const produtorId = Number(req.params.produtorId)
 
         const deleteProdutoService = new DeleteProdutoService();
 
-        const result = await deleteProdutoService.execute({
-            id: parseInt(id)
-        });
+        const produto = await deleteProdutoService.execute({
+            produtoId,
+            produtorId
+        })
 
-        return res.json(result)
+        return res.json(produto)
     }
 }
 

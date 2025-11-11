@@ -1,29 +1,32 @@
 import { Request, Response } from "express";
 import { CreateProdutoService } from "../../services/produto/CreateProdutoService";
+import Multer from 'multer'
 
 class CreateProdutoController {
   async handle(req: Request, res: Response) {
-    try {
-      const { nome, descricao, foto_produto, produtorId } = req.body;
+    const {nome, descricao} = req.body;
+    
+    const produtorId = Number(req.params.produtorId)
 
-      // Validação do produtorId
-      if (!produtorId || isNaN(Number(produtorId))) {
-        return res.status(400).json({ error: "ID do produtor inválido" });
-      }
+    const createProdutoService = new CreateProdutoService();
 
-      const createProdutoService = new CreateProdutoService();
+    if(!('file' in req) || !req.file){
+      throw new Error("Falha no upload da imagem")
+
+    } else { 
+
+      const { filename: foto_produto } = req.file as Express.Multer.File;
 
       const produto = await createProdutoService.execute({
         nome,
         descricao,
         foto_produto,
-        produtorId: Number(produtorId),
-      });
-
-      return res.status(201).json(produto);
-    } catch (error: any) {
-      return res.status(400).json({ error: error.message });
+        produtorId
+      })
+  
+      return res.json(produto)
     }
+
   }
 }
 

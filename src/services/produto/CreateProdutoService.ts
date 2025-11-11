@@ -1,70 +1,49 @@
-import prismaClient from "../../prisma";
+import prismaClient from "../../prisma"
 
 interface ProdutoRequest{
-    nome: string
-    descricao: string
+    nome: string,
+    descricao: string,
     foto_produto: string
+
     produtorId: number
 }
 
 class CreateProdutoService{
     async execute({nome, descricao, foto_produto, produtorId}: ProdutoRequest){
 
-        // Verificação se o campo nome foi preenchido
-        if(!nome){
-            throw new Error("Nome é obrigatório")
-        }
-
-        // Verificação se o campo descricao foi preenchido
-        if(!descricao){
-            throw new Error("Descrição é obrigatória")
-        }
-
-        // Verificação se o campo foto_produto foi preenchido
-        if(!foto_produto){
-            throw new Error("Foto do produto é obrigatória")
-        }
-
-        // Verificação se o produtorId existe
-        const produtorExists = await prismaClient.produtor.findFirst({
+        const produtorExist = await prismaClient.produtor.findUnique({
             where:{
                 id: produtorId
             }
         })
 
-        if(!produtorExists){
-            throw new Error("Produtor não encontrado")
+        if(!produtorExist){
+            throw new Error("Produtor não encontrado no sistema")
+        }
+        
+        const productAlreadyExist = await prismaClient.produto.findFirst({
+            where:{
+                nome: nome,
+                produtorId: produtorId
+            }
+        })
+
+        if(productAlreadyExist){
+            throw new Error("Produto já cadastrado no sistema")
         }
 
-        // Criar/Inserir a tupla
         const produto = await prismaClient.produto.create({
             data:{
                 nome: nome,
                 descricao: descricao,
                 foto_produto: foto_produto,
                 produtorId: produtorId
-            },
-
-            // Incluir dados do produtor relacionado
-            include:{
-                produtor: {
-                    include:{
-                        usuario: {
-                            select:{
-                                id: true,
-                                nome: true,
-                                email: true,
-                                papel: true
-                            }
-                        }
-                    }
-                }
             }
-        });
-        
-        // Retorno
+        })
+
         return produto;
+
     }
 }
 
-export {CreateProdutoService}
+export { CreateProdutoService }
