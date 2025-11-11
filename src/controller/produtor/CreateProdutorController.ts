@@ -4,20 +4,32 @@ import { CreateProdutorService } from "../../services/produtor/CreateProdutorSer
 class CreateProdutorController {
   async handle(req: Request, res: Response) {
     
-    const { biografia, foto_perfil, contato_whatsapp, contato_email, userId } = req.body;
+    const { biografia, contato_whatsapp, contato_email } = req.body;
+
+    const userId = Number(req.body.userId);
 
     const createProdutorService = new CreateProdutorService();
-
-    const produtor = await createProdutorService.execute({
-      biografia,
-      foto_perfil,
-      contato_whatsapp,
-      contato_email,
-      userId
     
-    })
+    if(!req.file){
+      throw new Error("Falha no upload da imagem")
 
-    return res.json(produtor)
+    } else {
+
+      const {originalname, filename: foto_perfil} = req.file;
+      
+      const produtor = await createProdutorService.execute({
+        biografia,
+        foto_perfil,
+        contato_whatsapp,
+        contato_email,
+        userId
+      
+      })
+  
+      return res.json(produtor)
+    }
+    
+
   }
 }
 

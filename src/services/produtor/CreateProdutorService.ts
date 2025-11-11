@@ -21,10 +21,6 @@ class CreateProdutorService{
         if(!user){
             throw new Error("Usuário não encontrado")
         }
-        
-        if(user.papel != 'PRODUTOR'){
-            throw new Error("O usuário não é um produtor")
-        }
 
         const producerExist = await prismaClient.produtor.findUnique({
             where:{

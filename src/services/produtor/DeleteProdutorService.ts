@@ -18,6 +18,7 @@ class DeleteProdutorService{
             throw new Error("Produtor não encontrado")
         }
 
+
         // Deletar o produtor (os produtos serão deletados automaticamente)
         const producer = await prismaClient.produtor.delete({
             where:{

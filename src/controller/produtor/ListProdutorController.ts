@@ -1,15 +1,22 @@
 import { Request, Response } from "express";
 import { ListProdutorService } from "../../services/produtor/ListProdutorService";
 
-class ListProdutorController{
-    async handle(req: Request, res: Response){
+class ListProdutorController {
+  async handle(req: Request, res: Response) {
+    const listProdutorService = new ListProdutorService();
+    const produtores = await listProdutorService.execute();
 
-        const listProdutorService = new ListProdutorService();
+    const baseUrl = `${req.protocol}://${req.get("host")}`;
 
-        const produtor = await listProdutorService.execute();
+    const produtor = produtores.map((produtor) => ({
+      ...produtor,
+      foto_perfil_url: produtor.foto_perfil
+        ? `${baseUrl}/files/${produtor.foto_perfil}`
+        : null,
+    }));
 
-        return res.json(produtor)
-    }
+    return res.json(produtor);
+  }
 }
 
-export {ListProdutorController};
+export { ListProdutorController };
