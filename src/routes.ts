@@ -1,23 +1,35 @@
 import { Router } from "express";
-import { CreateUserController } from "./controller/usuario/CreateUserController";
-import { AuthUserController } from "./controller/login/AuthUserController";
-import { ListUserController } from "./controller/usuario/ListUserController";
+
+import uploadConfig from './config/multer'
+
 import { isAuthenticated } from "./middlewares/isAuthenticated";
 import { can } from "./middlewares/can";
-import { ListPostController } from "./controller/postagem/ListPostController";
+
+import { AuthUserController } from "./controller/login/AuthUserController";
+
+import { CreateUserController } from "./controller/usuario/CreateUserController";
+import { ListUserController } from "./controller/usuario/ListUserController";
+import { UpdateUserController } from "./controller/usuario/UpdateUserController";
+import { DeleteUserController } from "./controller/usuario/DeleteUserController";
+
 import { CreatePostController } from "./controller/postagem/CreatePostController";
+import { ListPostController } from "./controller/postagem/ListPostController";
 import { UpdatePostController } from "./controller/postagem/UpdatePostController";
 import { DeletePostController } from "./controller/postagem/DeletePostController";
-import { DeleteUserController } from "./controller/usuario/DeleteUserController";
-import { UpdateUserController } from "./controller/usuario/UpdateUserController";
+
 import { CreateProdutorController } from "./controller/produtor/CreateProdutorController";
 import { ListProdutorController } from "./controller/produtor/ListProdutorController";
 import { UpdateProdutorController } from "./controller/produtor/UpdateProdutorController";
 import { DeleteProdutorController } from "./controller/produtor/DeleteProdutorController";
+
 import { CreateProdutoController } from "./controller/produto/CreateProdutoController";
 import { ListProdutoController } from "./controller/produto/ListProdutoController";
 import { UpdateProdutoController } from "./controller/produto/UpdateProdutoController";
 import { DeleteProdutoController } from "./controller/produto/DeleteProdutoController";
+import multer from "multer";
+
+
+const upload = multer(uploadConfig.upload("./tmp"))
 
 const router = Router();
 
@@ -30,9 +42,9 @@ const router = Router();
 
     router.post('/api/usuario', new CreateUserController().handle);
 
-    router.put('/api/usuario/:id', new UpdateUserController().handle);
+    router.put('/api/usuario/:id', isAuthenticated, new UpdateUserController().handle);
 
-    router.delete('/api/usuario/:id', new DeleteUserController().handle);
+    router.delete('/api/usuario/:id', isAuthenticated, new DeleteUserController().handle);
 
 
     // // Rotas protegidas *(apenas para o usuario autenticado)
@@ -44,24 +56,24 @@ const router = Router();
 // Rotas para Produtor
     router.get('/api/produtor', new ListProdutorController().handle);
 
-    router.post('/api/produtor', isAuthenticated, new CreateProdutorController().handle);
+    router.post('/api/produtor', isAuthenticated, upload.single('foto_perfil'), new CreateProdutorController().handle);
 
-    router.put('/api/produtor/:id', isAuthenticated, new UpdateProdutorController().handle);
+    router.put('/api/produtor/:id', isAuthenticated, upload.single('foto_perfil'), new UpdateProdutorController().handle);
 
     router.delete('/api/produtor/:id', isAuthenticated, new DeleteProdutorController().handle);
 
 // Rotas para Produto
     router.get('/api/produto', new ListProdutoController().handle);
 
-    router.post('/api/produto', isAuthenticated, new CreateProdutoController().handle);
+    router.post('/api/produtor/:produtorId/produto', isAuthenticated, upload.single('foto_produto'), new CreateProdutoController().handle);
 
-    router.put('/api/produto/:id', isAuthenticated, new UpdateProdutoController().handle);
+    router.put('/api/produtor/:produtorId/produto/:produtoId', isAuthenticated, upload.single('foto_produto'), new UpdateProdutoController().handle);
 
-    router.delete('/api/produto/:id', isAuthenticated, new DeleteProdutoController().handle);
+    router.delete('/api/produtor/:produtorId/produto/:produtoId', isAuthenticated, new DeleteProdutoController().handle);
 
 // Rotas para Postagem
 
-    router.get('/api/postagem', isAuthenticated, new ListPostController().handle);
+    router.get('/api/postagem', new ListPostController().handle);
 
     router.post('/api/admin/postagem', isAuthenticated, can('ADMIN'), new CreatePostController().handle);
 

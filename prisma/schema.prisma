@@ -75,6 +75,7 @@ model Postagem {
   titulo String @db.VarChar(255)
   conteudo String
   data_publicacao DateTime @default(now())
+  // Adicionar imagem
 
   autorId Int
   usuario Usuario @relation(fields: [autorId], references: [id], onDelete: SetNull)

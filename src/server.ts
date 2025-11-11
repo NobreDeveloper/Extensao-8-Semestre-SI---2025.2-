@@ -2,14 +2,18 @@ import express, { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import { router } from './routes';
 import 'dotenv/config'
+import path from 'path';
 
 const app = express();
 
 // Dizer ao express que a troca de dados será feita em JSON
 app.use(express.json());
 
+app.use(
+    '/api/files',
+    express.static(path.resolve(__dirname, '..', 'tmp'))
+)
 
-//
 app.use(cors());
 
 app.use(router);
