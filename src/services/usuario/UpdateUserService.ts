@@ -1,5 +1,6 @@
 
-import { Papel } from "@prisma/client";
+
+import { Papel } from "../../generated/prisma";
 import prismaClient from "../../prisma";
 
 interface UserRequest{

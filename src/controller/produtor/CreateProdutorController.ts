@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { CreateProdutorService } from "../../services/produtor/CreateProdutorService";
+import { Multer } from "multer";
 
 class CreateProdutorController {
   async handle(req: Request, res: Response) {
@@ -15,7 +16,9 @@ class CreateProdutorController {
 
     } else {
 
-      const {originalname, filename: foto_perfil} = req.file;
+      const file = req.file as Express.Multer.File;
+
+      const {originalname, filename: foto_perfil} = file;
       
       const produtor = await createProdutorService.execute({
         biografia,

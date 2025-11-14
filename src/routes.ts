@@ -75,12 +75,11 @@ const router = Router();
 
     router.get('/api/postagem', new ListPostController().handle);
 
-    router.post('/api/admin/postagem', isAuthenticated, can('ADMIN'), new CreatePostController().handle);
+    router.post('/api/admin/postagem', isAuthenticated, upload.single('banner'), can('ADMIN'), new CreatePostController().handle);
 
-    router.put('/api/admin/postagem/:id', isAuthenticated, can('ADMIN'), new UpdatePostController().handle);
+    router.put('/api/admin/postagem/:postId', isAuthenticated, upload.single('banner'), can('ADMIN'),  new UpdatePostController().handle);
 
-    router.delete('/api/admin/postagem/:id', isAuthenticated, can('ADMIN'), new DeletePostController().handle);
-
+    router.delete('/api/admin/postagem/:postId', isAuthenticated, can('ADMIN'), new DeletePostController().handle);
 
 
 export {router};

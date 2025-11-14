@@ -1,14 +1,15 @@
 import prismaClient from "../../prisma";
 
 interface PostRequest{
-    titulo: string;
-    conteudo: string;
-    
-    autorId: number;
+    titulo: string
+    conteudo: string
+    banner: string
+
+    autorId: number
 }
 
 class CreatePostService{
-    async execute({titulo, conteudo, autorId}: PostRequest){
+    async execute({titulo, conteudo, autorId, banner}: PostRequest){
 
         // Verificação se o usuário realmente existe
         const usuario = await prismaClient.usuario.findUnique({
@@ -21,15 +22,12 @@ class CreatePostService{
             throw new Error("Usuário não encontrado.")
         }
 
-        if(usuario.papel != "PRODUTOR"){
-            throw new Error("Somente produtores podem criar postagens.")
-        }
-
         // Criação do Post
         const post = await prismaClient.postagem.create({
             data:{
                 titulo: titulo,
                 conteudo: conteudo,
+                banner: banner,
                 
                 autorId: autorId
             }

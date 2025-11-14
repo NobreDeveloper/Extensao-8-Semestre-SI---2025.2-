@@ -4,7 +4,7 @@ import { DeletePostService } from "../../services/postagem/DeletePostService";
 class DeletePostController{
     async handle(req: Request, res: Response){
 
-        const postId = Number(req.params.id)
+        const postId = Number(req.params.postId)
 
         const deletePostService = new DeletePostService();
 

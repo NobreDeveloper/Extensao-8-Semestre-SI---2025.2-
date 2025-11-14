@@ -4,16 +4,18 @@ interface PostRequest{
     postId: number;
     titulo?: string;
     conteudo?: string;
-    usuarioId: number;
+    banner?: string | undefined;
+
+    autorId: number;
 }
 
 class UpdatePostService{
-    async execute({postId, titulo, conteudo, usuarioId}:PostRequest){
+    async execute({postId, titulo, conteudo, banner, autorId}:PostRequest){
 
         // Verificação se o usuario existe
         const usuario = await prismaClient.usuario.findUnique({
             where:{
-                id: usuarioId
+                id: autorId
             }
         })
 
@@ -21,14 +23,6 @@ class UpdatePostService{
             throw new Error("Produtor não encontrado!")
         }
 
-        
-        // Verificação se o usuário é um Produtor
-        if(usuario.papel != "PRODUTOR"){
-            throw new Error("Somente produtor podem editar suas postagens!")
-        }
-
-
-        // Verificação se a postagem existe e pertence ao usuário 
         const postagem = await prismaClient.postagem.findUnique({
             where: {
                 id: postId
@@ -39,12 +33,12 @@ class UpdatePostService{
             throw new Error("Postagem não encontrada!")
         }
 
-        if(postagem.autorId != usuarioId){
+        if(postagem.autorId != autorId){
             throw new Error("Só é permitido alterar suas próprias postagens!")
         }
 
         // Montagem do data para substituir ao valor original 
-        const data:{ titulo?: string; conteudo?: string } = {}
+        const data:{ titulo?: string; conteudo?: string, banner?: string } = {}
 
         if(titulo != undefined){
             data.titulo = titulo
@@ -54,6 +48,9 @@ class UpdatePostService{
             data.conteudo = conteudo
         }
 
+        if(banner != undefined){
+            data.banner = banner
+        }
 
         // Verificação se foi informado algo nos campos opcionais
         if (Object.keys(data).length === 0) {
