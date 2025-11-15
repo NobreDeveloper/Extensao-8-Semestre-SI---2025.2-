@@ -1,5 +1,6 @@
 
 
+
 import { Papel } from "../../generated/prisma";
 import prismaClient from "../../prisma";
 

@@ -2,8 +2,8 @@ import prismaClient from "../../prisma"
 
 interface PostRequest{
     postId: number;
-    titulo?: string;
-    conteudo?: string;
+    titulo?: string | undefined;
+    conteudo?: string | undefined;
     banner?: string | undefined;
 
     autorId: number;
