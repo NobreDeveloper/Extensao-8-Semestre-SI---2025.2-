@@ -1,8 +1,7 @@
-
-
-
-import { Papel } from "../../generated/prisma";
+import { Papel } from "@prisma/client";
 import prismaClient from "../../prisma";
+
+
 
 interface UserRequest{
     usuarioId: number,
