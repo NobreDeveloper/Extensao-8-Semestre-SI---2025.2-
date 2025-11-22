@@ -7,7 +7,7 @@ class CreateProdutorController {
     
     const { biografia, contato_whatsapp, contato_email } = req.body;
 
-    const userId = Number(req.body.userId);
+    const userId = Number(req.params.userId);
 
     const createProdutorService = new CreateProdutorService();
     
