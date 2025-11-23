@@ -20,3 +20,6 @@ Prisma (v6.16.1)
 
 ### Observação
 Seguir as orientações do **.env.example** para
+
+## Documentação da API 
+https://extensao-8-semestre-si-2025-2.onrender.com/api/doc/
