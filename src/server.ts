@@ -3,8 +3,16 @@ import cors from 'cors';
 import { router } from './routes';
 import 'dotenv/config'
 import path from 'path';
+import swaggerUi from "swagger-ui-express"
+
+import swaggerDocs from './swagger.json'
 
 const app = express();
+
+app.use(cors());
+
+app.use(router);
+
 
 // Dizer ao express que a troca de dados será feita em JSON
 app.use(express.json());
@@ -14,9 +22,14 @@ app.use(
     express.static(path.resolve(__dirname, '..', 'tmp'))
 )
 
-app.use(cors());
 
-app.use(router);
+// Documentação
+app.use(
+    '/api/doc', swaggerUi.serve, swaggerUi.setup(swaggerDocs)
+)
+
+
+
 
 
 // Todas as rotas passarão por aqui fazendo tratativa de erro

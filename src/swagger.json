@@ -1,0 +1,724 @@
+{
+    "openapi": "3.0.0",
+    
+    "info": {
+        "title": "Documentação da API",
+        "contact": {
+            "email": "pablonobre.dev@gmail.com"
+        }
+    },
+
+    "servers": [
+        {
+            "url": "http://localhost:3333",
+            "description": "Servidor Local"
+        },
+        {
+            "url": "https://extensao-8-semestre-si-2025-2.onrender.com",
+            "description": "Servidor Render"
+        }
+    ],
+
+    "paths": {
+        "/api/auth/login": {
+            "post": {
+                "summary": "Login de usuário",
+                "tags": [
+                    "Autenticação"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AuthLogin"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login realizado com sucesso"
+                    },
+                    "400": {
+                        "description": "Credenciais inválidas"
+                    }
+                }
+            }
+        },
+        "/api/usuario": {
+            "get": {
+                "summary": "Listar usuários",
+                "tags": [
+                    "Usuário"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de usuários retornada"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Criar usuário",
+                "tags": [
+                    "Usuário"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuário criado com sucesso"
+                    }
+                }
+            }
+        },
+        "/api/usuario/{id}": {
+            "put": {
+                "summary": "Atualizar usuário",
+                "tags": [
+                    "Usuário"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Usuário atualizado com sucesso"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Deletar usuário",
+                "tags": [
+                    "Usuário"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usuário deletado com sucesso"
+                    }
+                }
+            }
+        },
+        "/api/produtor": {
+            "get": {
+                "summary": "Listar produtores",
+                "tags": [
+                    "Produtor"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de produtores retornada"
+                    }
+                }
+            }
+        },
+        "/api/usuario/{userId}/produtor": {
+            "post": {
+                "summary": "Criar produtor vinculado a usuário",
+                "tags": [
+                    "Produtor"
+                ],
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProdutorCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Produtor criado com sucesso"
+                    }
+                }
+            }
+        },
+        "/api/produtor/{id}": {
+            "put": {
+                "summary": "Atualizar produtor",
+                "tags": [
+                    "Produtor"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProdutorUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Produtor atualizado com sucesso"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Deletar produtor",
+                "tags": [
+                    "Produtor"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Produtor deletado com sucesso"
+                    }
+                }
+            }
+        },
+        "/api/produto": {
+            "get": {
+                "summary": "Listar produtos",
+                "tags": [
+                    "Produto"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de produtos retornada"
+                    }
+                }
+            }
+        },
+        "/api/produtor/{produtorId}/produto": {
+            "post": {
+                "summary": "Criar produto vinculado a produtor",
+                "tags": [
+                    "Produto"
+                ],
+                "parameters": [
+                    {
+                        "name": "produtorId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProdutoCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Produto criado com sucesso"
+                    }
+                }
+            }
+        },
+        "/api/produtor/{produtorId}/produto/{produtoId}": {
+            "put": {
+                "summary": "Atualizar produto",
+                "tags": [
+                    "Produto"
+                ],
+                "parameters": [
+                    {
+                        "name": "produtorId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "produtoId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProdutoUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Produto atualizado com sucesso"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Deletar produto",
+                "tags": [
+                    "Produto"
+                ],
+                "parameters": [
+                    {
+                        "name": "produtorId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "produtoId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Produto deletado com sucesso"
+                    }
+                }
+            }
+        },
+        "/api/postagem": {
+            "get": {
+                "summary": "Listar postagens",
+                "tags": [
+                    "Postagem"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de postagens retornada"
+                    }
+                }
+            }
+        },
+        "/api/admin/postagem": {
+            "post": {
+                "summary": "Criar postagem (ADMIN)",
+                "tags": [
+                    "Postagem"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PostagemCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Postagem criada com sucesso"
+                    }
+                }
+            }
+        },
+        "/api/admin/postagem/{postId}": {
+            "put": {
+                "summary": "Atualizar postagem (ADMIN)",
+                "tags": [
+                    "Postagem"
+                ],
+                "parameters": [
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PostagemUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Postagem atualizada com sucesso"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Deletar postagem (ADMIN)",
+                "tags": [
+                    "Postagem"
+                ],
+                "parameters": [
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Postagem deletada com sucesso"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "AuthLogin": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "example": "usuario@email.com"
+                    },
+                    "senha": {
+                        "type": "string",
+                        "example": "123456"
+                    }
+                },
+                "required": [
+                    "email",
+                    "senha"
+                ]
+            },
+            "AuthResponse": {
+                "type": "object",
+                "properties": {
+                    "token": {
+                        "type": "string",
+                        "description": "JWT gerado para autenticação"
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/User"
+                    }
+                }
+            },
+            "User": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "nome": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "papel": {
+                        "type": "string",
+                        "enum": [
+                            "ADMIN",
+                            "USER"
+                        ]
+                    }
+                }
+            },
+            "UserCreate": {
+                "type": "object",
+                "properties": {
+                    "nome": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "senha": {
+                        "type": "string"
+                    },
+                    "papel": {
+                        "type": "string",
+                        "enum": [
+                            "ADMIN",
+                            "USER"
+                        ]
+                    }
+                },
+                "required": [
+                    "nome",
+                    "email",
+                    "senha",
+                    "papel"
+                ]
+            },
+            "UserUpdate": {
+                "type": "object",
+                "properties": {
+                    "nome": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "senha": {
+                        "type": "string"
+                    },
+                    "papel": {
+                        "type": "string",
+                        "enum": [
+                            "ADMIN",
+                            "USER"
+                        ]
+                    }
+                }
+            },
+            "Produtor": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "userId": {
+                        "type": "integer"
+                    },
+                    "biografia": {
+                        "type": "string"
+                    },
+                    "contato_whatsapp": {
+                        "type": "string"
+                    },
+                    "contato_email": {
+                        "type": "string"
+                    },
+                    "foto_perfil": {
+                        "type": "string"
+                    },
+                    "foto_perfil_url": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ProdutorCreate": {
+                "type": "object",
+                "properties": {
+                    "biografia": {
+                        "type": "string"
+                    },
+                    "contato_whatsapp": {
+                        "type": "string"
+                    },
+                    "contato_email": {
+                        "type": "string"
+                    },
+                    "foto_perfil": {
+                        "type": "string",
+                        "format": "binary"
+                    }
+                },
+                "required": [
+                    "biografia",
+                    "contato_whatsapp",
+                    "contato_email",
+                    "foto_perfil"
+                ]
+            },
+            "ProdutorUpdate": {
+                "type": "object",
+                "properties": {
+                    "biografia": {
+                        "type": "string"
+                    },
+                    "contato_whatsapp": {
+                        "type": "string"
+                    },
+                    "contato_email": {
+                        "type": "string"
+                    },
+                    "foto_perfil": {
+                        "type": "string",
+                        "format": "binary"
+                    }
+                }
+            },
+            "Produto": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "produtorId": {
+                        "type": "integer"
+                    },
+                    "nome": {
+                        "type": "string"
+                    },
+                    "descricao": {
+                        "type": "string"
+                    },
+                    "foto_produto": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ProdutoCreate": {
+                "type": "object",
+                "properties": {
+                    "nome": {
+                        "type": "string"
+                    },
+                    "descricao": {
+                        "type": "string"
+                    },
+                    "foto_produto": {
+                        "type": "string",
+                        "format": "binary"
+                    }
+                },
+                "required": [
+                    "nome",
+                    "descricao",
+                    "foto_produto"
+                ]
+            },
+            "ProdutoUpdate": {
+                "type": "object",
+                "properties": {
+                    "nome": {
+                        "type": "string"
+                    },
+                    "descricao": {
+                        "type": "string"
+                    },
+                    "foto_produto": {
+                        "type": "string",
+                        "format": "binary"
+                    }
+                }
+            },
+            "Postagem": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "autorId": {
+                        "type": "integer"
+                    },
+                    "titulo": {
+                        "type": "string"
+                    },
+                    "conteudo": {
+                        "type": "string"
+                    },
+                    "banner": {
+                        "type": "string"
+                    }
+                }
+            },
+            "PostagemCreate": {
+                "type": "object",
+                "properties": {
+                    "titulo": {
+                        "type": "string"
+                    },
+                    "conteudo": {
+                        "type": "string"
+                    },
+                    "banner": {
+                        "type": "string",
+                        "format": "binary"
+                    }
+                },
+                "required": [
+                    "titulo",
+                    "conteudo",
+                    "banner"
+                ]
+            },
+            "PostagemUpdate": {
+                "type": "object",
+                "properties": {
+                    "titulo": {
+                        "type": "string"
+                    },
+                    "conteudo": {
+                        "type": "string"
+                    },
+                    "banner": {
+                        "type": "string",
+                        "format": "binary"
+                    }
+                }
+            }
+        }
+    }
+}
