@@ -1,13 +1,11 @@
 {
     "openapi": "3.0.0",
-    
     "info": {
         "title": "Documentação da API",
         "contact": {
             "email": "pablonobre.dev@gmail.com"
         }
     },
-
     "servers": [
         {
             "url": "http://localhost:3333",
@@ -18,7 +16,6 @@
             "description": "Servidor Render"
         }
     ],
-
     "paths": {
         "/api/auth/login": {
             "post": {
@@ -42,6 +39,37 @@
                     },
                     "400": {
                         "description": "Credenciais inválidas"
+                    }
+                }
+            }
+        },
+        "/api/files/{fileName}": {
+            "get": {
+                "summary": "Acessar imagem",
+                "tags": [
+                    "Arquivos"
+                ],
+                "parameters": [
+                    {
+                        "name": "fileName",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Nome do arquivo salvo no servidor"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Retorna o arquivo solicitado",
+                        "content": {
+                            "image/jpeg": {},
+                            "image/png": {}
+                        }
+                    },
+                    "404": {
+                        "description": "Arquivo não encontrado"
                     }
                 }
             }
