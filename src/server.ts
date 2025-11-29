@@ -11,11 +11,12 @@ const app = express();
 
 app.use(cors());
 
+// Dizer ao express que a troca de dados será feita em JSON
+app.use(express.json());
+
 app.use(router);
 
 
-// Dizer ao express que a troca de dados será feita em JSON
-app.use(express.json());
 
 app.use(
     '/api/files',
