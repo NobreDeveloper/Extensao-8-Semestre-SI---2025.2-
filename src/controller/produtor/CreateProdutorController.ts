@@ -5,9 +5,7 @@ import { Multer } from "multer";
 class CreateProdutorController {
   async handle(req: Request, res: Response) {
     
-    const { biografia, contato_whatsapp, contato_email } = req.body;
-
-    const userId = Number(req.params.userId);
+    const { biografia, contato_whatsapp, contato_email, userId } = req.body;
 
     const createProdutorService = new CreateProdutorService();
     

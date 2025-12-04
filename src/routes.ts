@@ -56,7 +56,7 @@ const router = Router();
 // Rotas para Produtor
     router.get('/api/produtor', new ListProdutorController().handle);
 
-    router.post('/api/usuario/:userId/produtor', isAuthenticated, upload.single('foto_perfil'), new CreateProdutorController().handle);
+    router.post('/api/produtor', isAuthenticated, upload.single('foto_perfil'), new CreateProdutorController().handle);
 
     router.put('/api/produtor/:id', isAuthenticated, upload.single('foto_perfil'), new UpdateProdutorController().handle);
 

@@ -173,24 +173,14 @@
                         "description": "Lista de produtores retornada"
                     }
                 }
-            }
-        },
-        "/api/usuario/{userId}/produtor": {
+            },
+
             "post": {
                 "summary": "Criar produtor vinculado a usuário",
                 "tags": [
                     "Produtor"
                 ],
-                "parameters": [
-                    {
-                        "name": "userId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
+                
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -201,13 +191,16 @@
                         }
                     }
                 },
-                "responses": {
+
+                 "responses": {
                     "201": {
                         "description": "Produtor criado com sucesso"
                     }
                 }
             }
+        
         },
+
         "/api/produtor/{id}": {
             "put": {
                 "summary": "Atualizar produtor",
@@ -610,13 +603,17 @@
                     "foto_perfil": {
                         "type": "string",
                         "format": "binary"
+                    },
+                    "userId": {
+                        "type": "integer"
                     }
                 },
                 "required": [
                     "biografia",
                     "contato_whatsapp",
                     "contato_email",
-                    "foto_perfil"
+                    "foto_perfil",
+                    "userId"
                 ]
             },
             "ProdutorUpdate": {
