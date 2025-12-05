@@ -27,6 +27,9 @@ import { ListProdutoController } from "./controller/produto/ListProdutoControlle
 import { UpdateProdutoController } from "./controller/produto/UpdateProdutoController";
 import { DeleteProdutoController } from "./controller/produto/DeleteProdutoController";
 import multer from "multer";
+import { ListUserByIdController } from "./controller/usuario/ListUserByIdController";
+import { ListProdutorByIdController } from "./controller/produtor/ListProdutorByIdController";
+import { ListProdutoByIdController } from "./controller/produto/ListProdutoByIdController";
 
 
 const upload = multer(uploadConfig.upload("./tmp"))
@@ -39,6 +42,8 @@ const router = Router();
 
 // Rotas para Usuario
     router.get('/api/usuario', new ListUserController().handle);
+
+    router.get('/api/usuario/:id', new ListUserByIdController().handle);
 
     router.post('/api/usuario', new CreateUserController().handle);
 
@@ -55,6 +60,8 @@ const router = Router();
 
 // Rotas para Produtor
     router.get('/api/produtor', new ListProdutorController().handle);
+    
+    router.get('/api/produtor/:id', new ListProdutorByIdController().handle);
 
     router.post('/api/produtor', isAuthenticated, upload.single('foto_perfil'), new CreateProdutorController().handle);
 
@@ -64,6 +71,8 @@ const router = Router();
 
 // Rotas para Produto
     router.get('/api/produto', new ListProdutoController().handle);
+
+    router.get('/api/produtor/:produtorId/produto/:produtoId', new ListProdutoByIdController().handle);
 
     router.post('/api/produtor/:produtorId/produto', isAuthenticated, upload.single('foto_produto'), new CreateProdutoController().handle);
 

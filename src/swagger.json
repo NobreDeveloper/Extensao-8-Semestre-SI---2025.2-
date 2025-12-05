@@ -109,6 +109,16 @@
             }
         },
         "/api/usuario/{id}": {
+            "get":{
+                "summary": "Acessar um único usuario pelo ID",
+                "tags":["Usuário"],
+                "responses": {
+                    "200": {
+                        "description": "Lista de usuários retornada"
+                    }
+                }
+            },
+
             "put": {
                 "summary": "Atualizar usuário",
                 "tags": [
@@ -202,6 +212,15 @@
         },
 
         "/api/produtor/{id}": {
+            "get":{
+                "summary": "Acessar um único produtor pelo ID",
+                "tags":["Produtor"],
+                "responses": {
+                    "200": {
+                        "description": "Lista de produtos retornada"
+                    }
+                }
+            },
             "put": {
                 "summary": "Atualizar produtor",
                 "tags": [
@@ -302,6 +321,15 @@
             }
         },
         "/api/produtor/{produtorId}/produto/{produtoId}": {
+            "get":{
+                "summary": "Acessar um único produto pelo ID",
+                "tags":["Produto"],
+                "responses": {
+                    "200": {
+                        "description": "Lista de produtos retornada"
+                    }
+                }
+            },
             "put": {
                 "summary": "Atualizar produto",
                 "tags": [
